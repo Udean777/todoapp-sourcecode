@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useTodosContext } from "../hooks/useTodosContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function TodoForm() {
   const { dispatch } = useTodosContext();
+  const { user } = useAuthContext();
   const [title, setTitle] = useState("");
   const [time, setTime] = useState("");
   const [describe, setDescribe] = useState("");
@@ -12,6 +14,11 @@ export default function TodoForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!user) {
+      setError("You must be logged in");
+      return;
+    }
+
     const todo = { title, time, describe };
 
     const response = await fetch("http://localhost:3000/api/todolist", {
@@ -19,6 +26,7 @@ export default function TodoForm() {
       body: JSON.stringify(todo),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
       },
     });
     const json = await response.json();
@@ -60,7 +68,7 @@ export default function TodoForm() {
         />
 
         <div className="py-4">
-          <label className="text-sm">How much time you need : </label>
+          <label className="text-sm">How much time you spend : </label>
           <input
             className={
               emptyFields.includes("time")

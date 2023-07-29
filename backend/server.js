@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const todoRoutes = require("./routes/todolist");
 const cors = require("cors");
+const userRoutes = require("./routes/user");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/todolist", todoRoutes);
+app.use("/api/user", userRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)

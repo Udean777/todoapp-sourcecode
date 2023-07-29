@@ -7,6 +7,10 @@ const {
   delTodo,
   updateTodo,
 } = require("../controllers/todoController");
+const requireAuth = require("../middleware/requireAuth");
+
+// require auth for all todo routes
+router.use(requireAuth);
 
 // GET all Todo List
 router.get("/", getTodos);

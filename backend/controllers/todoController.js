@@ -1,9 +1,12 @@
+const User = require("../models/userModel");
 const Todo = require("../models/todoModel");
 const mongoose = require("mongoose");
 
 // get all todolist
 const getTodos = async (req, res) => {
-  const todo = await Todo.find({}).sort({ createdAt: -1 });
+  const user_id = req.user._id;
+
+  const todo = await Todo.find({ user_id }).sort({ createdAt: -1 });
   res.status(200).json(todo);
 };
 
@@ -46,7 +49,8 @@ const createTodo = async (req, res) => {
 
   //   add doc to mongodb
   try {
-    const todo = await Todo.create({ title, time, describe });
+    const user_id = req.user._id;
+    const todo = await Todo.create({ title, time, describe, user_id });
     res.status(200).json(todo);
   } catch (error) {
     res.status(400).json({ error: error.message });
