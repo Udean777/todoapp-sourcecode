@@ -12,10 +12,10 @@ const Navbar = () => {
   };
 
   return (
-    <header className="bg-slate-100 p-5 flex justify-center px-64 dark:text-slate-50 dark:bg-slate-700">
-      <div className="container">
+    <header className="flex justify-between bg-slate-100 p-5 px-64 dark:text-slate-50 dark:bg-slate-700">
+      <div>
         <Link to="/">
-          <h1 className="font-bold text-2xl ">Your Todo</h1>
+          <h1 className="font-bold text-2xl">Your Todo</h1>
         </Link>
       </div>
       <nav className="px-5 flex gap-3">
@@ -46,8 +46,8 @@ const Navbar = () => {
             </Link>
           </div>
         )}
+        <DarkMode />
       </nav>
-      <DarkMode />
     </header>
   );
 };
